@@ -83,12 +83,15 @@ class AddUserCommand extends UserCommand
         ]);
 
         // Ask for the username if it's not defined
-        $username = $input->getArgument('username');
-        if (null !== $username) {
-            $this->io->text(' > <info>Username</info>: '.$username);
-        } else {
-            $username = $this->io->ask('Username', null, [$this->validator, 'validateUsername']);
-            $input->setArgument('username', $username);
+        if($this->hasUsername())
+        {
+            $username = $input->getArgument('username');
+            if (null !== $username) {
+                $this->io->text(' > <info>Username</info>: '.$username);
+            } else {
+                $username = $this->io->ask('Username', null, [$this->validator, 'validateUsername']);
+                $input->setArgument('username', $username);
+            }
         }
 
         // Ask for the password if it's not defined
@@ -100,22 +103,31 @@ class AddUserCommand extends UserCommand
             $input->setArgument('password', $password);
         }
 
-        // Ask for the email if it's not defined
-        $email = $input->getArgument('email');
-        if (null !== $email) {
-            $this->io->text(' > <info>Email</info>: '.$email);
-        } else {
-            $email = $this->io->ask('Email', null, [$this->validator, 'validateEmail']);
-            $input->setArgument('email', $email);
+        
+
+        if($this->hasEmail())
+        {
+            // Ask for the email if it's not defined
+            $email = $input->getArgument('email');
+            if (null !== $email) {
+                $this->io->text(' > <info>Email</info>: '.$email);
+            } else {
+                $email = $this->io->ask('Email', null, [$this->validator, 'validateEmail']);
+                $input->setArgument('email', $email);
+            }
+            
         }
 
-        // Ask for the full name if it's not defined
-        $fullName = $input->getArgument('full-name');
-        if (null !== $fullName) {
-            $this->io->text(' > <info>Full Name</info>: '.$fullName);
-        } else {
-            $fullName = $this->io->ask('Full Name', null, [$this->validator, 'validateFullName']);
-            $input->setArgument('full-name', $fullName);
+        if($this->hasFullName())
+        {   
+            // Ask for the full name if it's not defined
+            $fullName = $input->getArgument('full-name');
+            if (null !== $fullName) {
+                $this->io->text(' > <info>Full Name</info>: '.$fullName);
+            } else {
+                $fullName = $this->io->ask('Full Name', null, [$this->validator, 'validateFullName']);
+                $input->setArgument('full-name', $fullName);
+            }
         }
     }
 
@@ -143,8 +155,14 @@ class AddUserCommand extends UserCommand
         {
             $user->setFullName($fullName);
         }
-        $user->setUsername($username);
-        $user->setEmail($email);
+        if($this->hasUsername())
+        {
+            $user->setUsername($username);
+        }
+        if($this->hasEmail())
+        {
+            $user->setEmail($email);
+        }
         $user->setRoles([$isAdmin ? 'ROLE_ADMIN' : 'ROLE_USER']);
 
         // See https://symfony.com/doc/current/security.html#c-encoding-passwords
