@@ -158,10 +158,12 @@ class AddUserCommand extends UserCommand
         if($this->hasUsername())
         {
             $user->setUsername($username);
+            $display=$username;
         }
         if($this->hasEmail())
         {
             $user->setEmail($email);
+            $display=$email;
         }
         $user->setRoles([$isAdmin ? 'ROLE_ADMIN' : 'ROLE_USER']);
 
@@ -172,7 +174,7 @@ class AddUserCommand extends UserCommand
         $this->entityManager->persist($user);
         $this->entityManager->flush();
 
-        $this->io->success(sprintf('%s was successfully created: %s (%s)', $isAdmin ? 'Administrator user' : 'User', $user->getUsername(), $user->getEmail()));
+        $this->io->success(sprintf('%s was successfully created: %s', $isAdmin ? 'Administrator user' : 'User', $email));
 
         $event = $stopwatch->stop('add-user-command');
         if ($output->isVerbose()) {
