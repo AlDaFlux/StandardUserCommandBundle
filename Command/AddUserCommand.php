@@ -191,17 +191,22 @@ class AddUserCommand extends UserCommand
             throw new RuntimeException(sprintf('There is already a user registered with the "%s" username.', $username));
         }
 
-        // validate password and email if is not this input means interactive.
-        $this->validator->validatePassword($plainPassword);
-        $this->validator->validateEmail($email);
-        $this->validator->validateFullName($fullName);
-
-        // check if a user with the same email already exists.
-        $existingEmail = $this->users->findOneBy(['email' => $email]);
-
-        if (null !== $existingEmail) {
-            throw new RuntimeException(sprintf('There is already a user registered with the "%s" email.', $email));
+        if($this->hasFullName())
+        {
+            $this->validator->validateFullName($fullName);
         }
+        if($this->hasEmail())
+        {
+            $this->validator->validateEmail($email);
+            // check if a user with the same email already exists.
+            $existingEmail = $this->users->findOneBy(['email' => $email]);
+
+            if (null !== $existingEmail) {
+                throw new RuntimeException(sprintf('There is already a user registered with the "%s" email.', $email));
+            }
+        }
+        $this->validator->validatePassword($plainPassword);
+    
     }
 
     /**
