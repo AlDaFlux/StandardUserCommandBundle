@@ -1,7 +1,7 @@
 {
   "name": "aldaflux/standard-user-command-bundle",
   "type": "symfony-bundle",
-  "description": "This is my bundle",
+  "description": "User bundle inspired my fos user command",
   "keywords": ["Bundle"],
   "homepage": "https://github.com/Aldaflux/AldafluxStandardUserCommandBundle",
   "language":  "php",
@@ -9,8 +9,7 @@
  "minimum-stability": "stable",
  "prefer-stable":true,
  "require": {
-        "symfony/framework-bundle": ">=4.0",
-       "doctrine/collections": ">=1.0"
+        "symfony/framework-bundle": ">=5.4"
   },
     "autoload": {
         "psr-4": {
