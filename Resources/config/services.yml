@@ -1,0 +1,25 @@
+services:
+   aldaflux_suc.validator:
+        class: Aldaflux\AldafluxStandardUserCommandBundle\Service\Validator
+        public: true
+        autowire: true
+   Aldaflux\AldafluxStandardUserCommandBundle\Service\Validator: '@aldaflux_suc.validator'
+   Aldaflux\AldafluxStandardUserCommandBundle\Command\ListUsersCommand:
+        arguments: ["@doctrine.orm.default_entity_manager", "@security.user_providers"]
+        tags:
+            -
+                name:     console.command
+                id:       'aldaflux_suc.list'
+   Aldaflux\AldafluxStandardUserCommandBundle\Command\ChangePasswordCommand:
+        arguments: ["@doctrine.orm.default_entity_manager", "@security.user_password_hasher"]
+        tags:
+            -
+                name:     console.command
+                id:       'aldaflux_suc.change_password'
+   Aldaflux\AldafluxStandardUserCommandBundle\Command\AddUserCommand:
+        arguments: ["@doctrine.orm.default_entity_manager", "@security.user_password_hasher","@aldaflux_suc.validator"]
+        tags:
+            -
+                name:     console.command
+                id:       'aldaflux_suc.add'
+   

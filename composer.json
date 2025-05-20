@@ -1,0 +1,22 @@
+{
+  "name": "aldaflux/standard-user-command-bundle",
+  "type": "symfony-bundle",
+  "description": "User bundle inspired my fos user command",
+  "keywords": ["Bundle"],
+  "homepage": "https://github.com/Aldaflux/AldafluxStandardUserCommandBundle",
+  "language":  "php",
+  "license": "MIT",
+ "minimum-stability": "stable",
+ "prefer-stable":true,
+ "require": {
+        "symfony/framework-bundle": ">=7.1"
+  },
+    "autoload": {
+        "psr-4": {
+            "Aldaflux\\AldafluxStandardUserCommandBundle\\": ""
+        }
+    }
+
+}
+
+
