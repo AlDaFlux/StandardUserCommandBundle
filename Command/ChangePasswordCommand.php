@@ -61,7 +61,7 @@ EOT
         $this->entityManager->persist($user);
         $this->entityManager->flush();
 
-        $output->writeln(sprintf('Changed password for user <comment>%s</comment>', $user->getUsername()));
+        $output->writeln(sprintf('Changed password for user <comment>%s</comment>', $user));
 
         return Command::SUCCESS;
     }
