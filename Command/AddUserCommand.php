@@ -146,16 +146,29 @@ class AddUserCommand extends UserCommand
         $user = new User();
         if($this->hasFullName())
         {
+
+            if ($output->isVerbose())
+            {
+                $output->writeln('FullName :'.$fullName);
+            }
             $user->setFullName($fullName);
         }
         
         if ($this->hasUsername())
         {
+            if ($output->isVerbose())
+            {
+                $output->writeln('username :'.$username);
+            }
             $user->setUsername($username);
         }
         
         if ($this->hasEmail())
         {
+            if ($output->isVerbose())
+            {
+                $output->writeln('Email :'.$email);
+            }
             $user->setEmail($email);
         }
         
@@ -168,7 +181,7 @@ class AddUserCommand extends UserCommand
         $this->entityManager->persist($user);
         $this->entityManager->flush();
 
-        $this->io->success(sprintf('%s was successfully created: %s (%s)', $isAdmin ? 'Administrator user' : 'User', $user->getUsername(), $user->getEmail()));
+        $this->io->success(sprintf('%s was successfully created: ', $isAdmin ? 'Administrator user' : 'User'));
 
         $event = $stopwatch->stop('add-user-command');
         if ($output->isVerbose()) {
@@ -180,11 +193,14 @@ class AddUserCommand extends UserCommand
 
     private function validateUserData($username, $plainPassword, $email, $fullName): void
     {
-        // first check if a user with the same username already exists.
-        $existingUser = $this->users->findOneBy(['username' => $username]);
+        if ($this->hasUsername())
+        {
+            // first check if a user with the same username already exists.
+            $existingUser = $this->users->findOneBy(['username' => $username]);
 
-        if (null !== $existingUser) {
-            throw new RuntimeException(sprintf('There is already a user registered with the "%s" username.', $username));
+            if (null !== $existingUser) {
+                throw new RuntimeException(sprintf('There is already a user registered with the "%s" username.', $username));
+            }
         }
 
         // validate password and email if is not this input means interactive.
