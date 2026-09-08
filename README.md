@@ -66,3 +66,26 @@ You can alternatively specify the new password as a second argument:
 ```sh
 ./bin/console suc:user:change-password username newpassword
 ```
+
+### Promote user
+
+Promotes a user by adding or replacing a role.
+
+```sh
+./bin/console suc:user:promote
+```
+
+You can specify the user identifier (username, email, or ID) and the role directly:
+
+```sh
+./bin/console suc:user:promote username ROLE_ADMIN
+```
+
+By default, the role is added to existing roles. To replace all existing roles with the specified role, use the `--replace` option:
+
+```sh
+./bin/console suc:user:promote username ROLE_ADMIN --replace
+```
+
+If you omit any required arguments, the command will ask for them interactively.
+
