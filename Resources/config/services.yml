@@ -22,4 +22,11 @@ services:
             -
                 name:     console.command
                 id:       'aldaflux_suc.add'
+   Aldaflux\AldafluxStandardUserCommandBundle\Command\PromoteUserCommand:
+        arguments: ["@doctrine.orm.default_entity_manager"]
+        tags:
+            -
+                name:     console.command
+                id:       'aldaflux_suc.promote'
+
    
